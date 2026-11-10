@@ -2,25 +2,12 @@ using UnityEngine;
 
 public class ClicktoDestory : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnMouseDown()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
-    private void OnMouseDown()
-    {
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.AddScore(10);
+        }
         Destroy(gameObject);
-        Debug.Log("Object Clicked");
     }
 }
-
-
-
