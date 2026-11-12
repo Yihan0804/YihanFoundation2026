@@ -1,38 +1,54 @@
 using UnityEngine;
 using TMPro;
-
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
-    public int score = 0;
-    public TextMeshProUGUI scoreText;
 
-    void Awake()
+    public int score = 0;
+    public int targetScore = 60;
+    public GameObject victoryPanel;
+    public TMP_Text scoreText;
+
+
+    private void Update()
     {
-        Instance = this;
+
+
+        if (score >= targetScore)
+        {
+            TriggerVictory();
+        }
+
+        scoreText.text = "Score: " + score.ToString();
+    }
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
     }
 
     void Start()
     {
-        if (scoreText == null)
+        if (victoryPanel != null)
         {
-            GameObject t = GameObject.Find("scoreText");
-            if (t != null) scoreText = t.GetComponent<TextMeshProUGUI>();
+            victoryPanel.SetActive(false);
         }
-        UpdateUI();
     }
 
     public void AddScore(int amount)
     {
         score += amount;
-        UpdateUI();
+
+        if (score >= targetScore)
+        {
+            TriggerVictory();
+        }
     }
 
-    void UpdateUI()
+    void TriggerVictory()
     {
-        if (scoreText != null)
+        if (victoryPanel != null)
         {
-            scoreText.text = "Score: " + score;
+            victoryPanel.SetActive(true);
         }
     }
 }
